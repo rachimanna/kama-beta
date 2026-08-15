@@ -15,12 +15,16 @@ jobs:
         with:
           java-version: '17'
           distribution: 'temurin'
+      - name: List files
+        run: |
+          pwd
+          ls -la
+          find . -name "gradlew" -type f
       - name: Build APK
         run: |
-          cd TMessagesProj
           chmod +x ./gradlew
-          ./gradlew assembleDebug
+          ./gradlew :TMessagesProj_App:assembleDebug
       - uses: actions/upload-artifact@v4
         with:
           name: kama-beta-apk
-          path: TMessagesProj/build/outputs/apk/debug/*.apk
+          path: TMessagesProj_App/build/outputs/apk/debug/*.apk
