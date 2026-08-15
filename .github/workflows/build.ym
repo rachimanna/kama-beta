@@ -1,0 +1,25 @@
+name: Build Kama Beta
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          submodules: true
+      - uses: actions/setup-java@v4
+        with:
+          java-version: '17'
+          distribution: 'temurin'
+      - name: Build APK
+        run: |
+          chmod +x gradlew
+          ./gradlew :TMessagesProj_App:assembleDebug
+      - uses: actions/upload-artifact@v4
+        with:
+          name: kama-beta-apk
+          path: TMessagesProj_App/build/outputs/apk/debug/*.apk
